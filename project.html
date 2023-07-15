@@ -3,10 +3,80 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TEMP PACE TITLE</title>
-    <link rel="stylesheet" type="text/css" href="style/project.css" />
+    <title>Star/Planet/Constellation Tracker</title>
+    <!-- Bulma CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+    <link rel="stylesheet" type="text/css" href="style/project.css"/>
 </head>
 <body>
-    
+    <header class="hero is-link block">
+        <div class="hero-body">
+            <h1 class="title is-1 has-text-centered">CelesTracker</h1>
+            <p class="subtitle has-text-centered">Web App for Finding Stars, Planets, and Constellations</p>
+        </div>
+    </header>
+    <main class="tile is-ancestor is-vertical">
+        <section class="tile is-parent block" id="cityEntry">
+            <div class="tile is-child is-1.5">
+
+            </div>
+            <div class="tile is-child is-4 notification is-info has-text-white">
+                <h2 class="is-size-3">Enter your City:</h2>
+            </div>
+            <div class="tile is-child is-1">
+
+            </div>
+            <div class="control tile is-child is-4 is-info">
+                <input class="input is-large is-link" type="text" placeholder="Austin, TX">
+            </div>
+            <div class="tile is-child is-1.5">
+
+            </div>
+        </section>
+        <section class="tile is-parent block" id="starEntry">
+            <div class="tile is-child is-1.5">
+
+            </div>
+            <div class="tile is-child is-4 notification is-info has-text-white">
+                <h2 class="is-size-5">What star, planet, or constellation would you like to see?</h2>
+            </div>
+            <div class="tile is-child is-1">
+
+            </div>
+            <div class="control tile is-child is-4 is-info">
+                <input class="input is-large is-link" type="text" placeholder="Ursa Major">
+            </div>
+            <div class="tile is-child is-1.5">
+
+            </div>
+        </section>
+        <section class="columns is-centered tile is-parent block">
+            <div class="control tile is-child is-4">
+                <button class="button is-primary is-large is-fullwidth has-text-black">Search</button>
+            </div>
+        </section>
+        <section class="tile is-parent block" id="resultsArea">
+            <div class="tile is-child is-1.5">
+
+            </div>
+            <div class="tile is-child is-4 notification is-success">
+                <figure class="image is-4by3">
+                    <img src="https://bulma.io/images/placeholders/640x480.png">
+                </figure>
+            </div>
+            <div class="tile is-child is-1">
+
+            </div>
+            <div class="tile is-child is-4 notification is-success has-text-black">
+                <p>Primar lorem ipsum dolor sit amet, consectetur
+                    adipiscing elit lorem ipsum dolor. <strong>Pellentesque risus mi</strong>, tempus quis placerat ut, porta nec nulla. Vestibulum rhoncus ac ex sit amet fringilla. Nullam gravida purus diam, et dictum <a>felis venenatis</a> efficitur.
+                </p>
+            </div>
+            <div class="tile is-child is-1.5">
+
+            </div>
+        </section>
+    </main>
+    <script src="./js/project.js"></script>
 </body>
 </html>
