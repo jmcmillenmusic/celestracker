@@ -1,11 +1,11 @@
-/*CODE TO CALL THE WEATHER API AND CONSOLE LOG IT IDK WHY THE API KEY HATES ME THO 
+//CODE TO CALL THE WEATHER API AND CONSOLE LOG IT IDK WHY THE API KEY HATES ME THO 
 
 const weatherApiKey = '6627c4ea662f482e8d542843231607'; 
 const apiUrl = 'https://api.open-meteo.com/v1/forecast?latitude=29.7633&longitude=-95.3633&hourly=cloudcover';
 
 document.getElementById('searchButton').addEventListener('click', () => {
   const cityInput = document.getElementById('cityInput').value;
-  const url = `${apiUrl}?key=${weatherApiKey}&q=${cityInput}&aqi=no`;
+  const url = "${apiUrl}?key=${weatherApiKey}&q=${cityInput}&aqi=no";
 
   fetch(url)
     .then(response => {
@@ -31,4 +31,4 @@ function updateResults(weatherData) {
   // Update the image source and paragraph content with the weatherData
   imageElement.src = weatherData.imageSrc;
   paragraphElement.textContent = weatherData.description;
-} */
+} 
