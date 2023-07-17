@@ -1,5 +1,4 @@
-//CODE TO CALL THE WEATHER API AND CONSOLE LOG IT IDK WHY THE API KEY HATES ME THO 
-
+//API KEYS
 const weatherApiKey = '6627c4ea662f482e8d542843231607'; 
 const nasaApiKey = 'eJrxMfuUCBlR4AONaH2qLH1B3omdD8CaWfksRWQi';
 
@@ -56,8 +55,8 @@ document.getElementById('searchButton').addEventListener('click', () => {
 });
 
 function updateResults(weatherData) {
-  const imageElement = document.querySelector('#resultsArea .image');
-  const paragraphElement = document.querySelector('#resultsArea .notification');
+  const imageElement = document.querySelector('#resultImage');
+  const paragraphElement = document.querySelector('#resultDescription');
   
   // Update the image source and paragraph content with the weatherData
   imageElement.src = weatherData.imageSrc;
@@ -72,3 +71,4 @@ for (let i = 0; i < celestialBodies.length; i++) {
   var datalistEl = document.querySelector("#celestialBodies");
   datalistEl.appendChild(optionEl);
 }
+
