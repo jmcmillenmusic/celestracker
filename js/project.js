@@ -44,26 +44,33 @@ fetch(nasaApiUrl)
     // Display an error message to the user or perform other actions
   });
 
-  // Make a request to the weather API
-  var weatherApiUrl = 'http://api.weatherapi.com/v1/current.json?key=6627c4ea662f482e8d542843231607&q=' + cityInput + '&aqi=no';
-  console.log(weatherApiUrl);
-  
-  fetch(weatherApiUrl)
-    .then(response => {
-      if (!response.ok) {
-        throw new Error('Request to weather API failed');
-      }
-      return response.json();
-    })
-    .then(data => {
-      console.log(data);
-      const currentWeather = data.current;
-      console.log(currentWeather);
-    })
-    .catch(error => {
-      console.error(error);
-      // Display an error message to the user or perform other actions
-    });
+// Make a request to the weather API
+var weatherApiUrl = 'http://api.weatherapi.com/v1/current.json?key=6627c4ea662f482e8d542843231607&q=' + cityInput + '&aqi=no';
+console.log(weatherApiUrl);
+
+fetch(weatherApiUrl)
+  .then(response => {
+    if (!response.ok) {
+      throw new Error('Request to weather API failed');
+    }
+    return response.json();
+  })
+  .then(data => {
+    console.log(data);
+    const currentWeather = data.current;
+    console.log(currentWeather);
+
+    // Check if the weather condition is "cloudy"
+    if (currentWeather.condition.text.toLowerCase().includes('overcast')) {
+      throw new Error('It is currently cloudy. Please try again later.');
+    }
+
+    // Continue with other actions if needed
+  })
+  .catch(error => {
+    console.error(error);
+    // Display an error message to the user or perform other actions
+  });
 });
 
 function updateResults(weatherData) {
