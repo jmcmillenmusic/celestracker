@@ -2,18 +2,19 @@
 const weatherApiKey = '6627c4ea662f482e8d542843231607'; 
 const nasaApiKey = 'eJrxMfuUCBlR4AONaH2qLH1B3omdD8CaWfksRWQi';
 
-//API LINK
-const nasaApiUrl = 'https://images-api.nasa.gov/search';
-const apiUrl = 'http://api.weatherapi.com/v1/current.json';
+// Heads-up: I (Jeff) moved the API links into the addEventListener section.
 
+// This button will grab the user's inputs for location and what star/planet/constellation they're searching for.
 document.getElementById('searchButton').addEventListener('click', () => {
-  const cityInput = document.getElementById('cityInput').value;
-  const starInput = document.getElementById('starList').value;
+  var cityInput = document.getElementById('cityInput').value;
+  var starInput = document.getElementById('starList').value;
+  var starPhoto = document.getElementById('starPhoto');
 
-  // Make a request to the NASA API
-  const nasaUrl = "${nasaApiUrl}?q=${starInput}&media_type=image&api_key=${nasaApiKey}";
+  // NASA API URL, which takes the name of the star/planet/constellation from the user
+  var nasaApiUrl = 'https://images-api.nasa.gov/search?q=' + starInput + '&media_type=image';
   
-  fetch(nasaUrl)
+  // Make a request to the NASA API
+  fetch(nasaApiUrl)
     .then(response => {
       if (!response.ok) {
         throw new Error('Request to NASA API failed');
@@ -22,9 +23,10 @@ document.getElementById('searchButton').addEventListener('click', () => {
     })
     .then(data => {
       // Check if there are any images available in the response
+      console.log(data);
       if (data.collection.items.length > 0) {
-        const imageUrl = data.collection.items[0].links[0].href;
-        updateResults(imageUrl);
+        var imageUrl = data.collection.items[0].links[0].href;
+        starPhoto.setAttribute('src', imageUrl);
       } else {
         updateResults(''); // No image found
       }
@@ -34,10 +36,12 @@ document.getElementById('searchButton').addEventListener('click', () => {
       // Display an error message to the user or perform other actions
     });
   
+
   // Make a request to the weather API
-  const weatherUrl = "${apiUrl}?key=${weatherApiKey}&q=${cityInput}&aqi=no";
+  var weatherApiUrl = 'http://api.weatherapi.com/v1/current.json?key=6627c4ea662f482e8d542843231607&q=' + cityInput + '&aqi=no';
+  console.log(weatherApiUrl);
   
-  fetch(weatherUrl)
+  fetch(weatherApiUrl)
     .then(response => {
       if (!response.ok) {
         throw new Error('Request to weather API failed');
@@ -45,8 +49,9 @@ document.getElementById('searchButton').addEventListener('click', () => {
       return response.json();
     })
     .then(data => {
+      console.log(data);
       const currentWeather = data.current;
-      updateResults(currentWeather);
+      console.log(currentWeather);
     })
     .catch(error => {
       console.error(error);
