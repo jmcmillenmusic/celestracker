@@ -70,10 +70,16 @@ function updateResults(weatherData) {
 
 var celestialBodies = ['Mercury', 'Venus', 'Mars', 'Jupiter', 'Saturn', 'Uranus', 'Neptune', 'Pluto', "Andromeda", "Antlia", "Apus", "Aquarius", "Aquila", "Auriga", "Boötes", "Cancer", "Canis Major", "Capricornus", "Cassiopeia", "Cygnus", "Gemini", "Leo", "Libra", "Lyra", "Orion", "Pegasus", "Perseus", "Pisces", "Sagittarius", "Scorpius", "Taurus", "Ursa Major", "Virgo"];
 
-for (let i = 0; i < celestialBodies.length; i++) {
-  var optionEl = document.createElement("option");
-  optionEl.value = celestialBodies[i];
+document.getElementById('starList').addEventListener('input', function() {
+  var userInput = this.value;
   var datalistEl = document.querySelector("#celestialBodies");
-  datalistEl.appendChild(optionEl);
-}
+  datalistEl.innerHTML = ""; 
 
+  for (let i = 0; i < celestialBodies.length; i++) {
+    if (celestialBodies[i].toLowerCase().startsWith(userInput.toLowerCase())) {
+      var optionEl = document.createElement("option");
+      optionEl.value = celestialBodies[i];
+      datalistEl.appendChild(optionEl);
+    }
+  }
+});
