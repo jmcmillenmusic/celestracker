@@ -83,3 +83,85 @@ document.getElementById('starList').addEventListener('input', function() {
     }
   }
 });
+
+document.getElementById('searchButton').addEventListener('click', searchWikipedia);
+
+function searchWikipedia() {
+  const starInput = document.getElementById('starList').value;
+  const apiUrl = `https://en.wikipedia.org/w/api.php?action=query&origin=*&format=json&list=search&srsearch=${encodeURIComponent(starInput)}`;
+
+  fetch(apiUrl)
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Request failed');
+      }
+      return response.json();
+    })
+    .then(data => {
+      const pages = data.query.search;
+      if (pages.length > 0) {
+        const firstPage = pages[0];
+        const pageTitle = firstPage.title;
+        return fetchPageContent(pageTitle);
+      } else {
+        throw new Error('No results found.');
+      }
+    })
+    .then(pageContent => {
+      const pageTitle = pageContent.title;
+      const limitedExtract = extractLimitedContent(pageContent.extract, 3); // Limit to 3 sentences
+      updateWikiResults([{ pageTitle, limitedExtract, pageId: pageContent.pageid }]);
+    })
+    .catch(error => {
+      console.error(error);
+      // Display an error message to the user or perform other actions
+    });
+}
+
+function fetchPageContent(pageTitle) {
+  const pageUrl = `https://en.wikipedia.org/w/api.php?action=query&origin=*&format=json&prop=extracts&exintro=true&titles=${encodeURIComponent(pageTitle)}`;
+  return fetch(pageUrl)
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Request failed');
+      }
+      return response.json();
+    })
+    .then(data => {
+      const pageId = Object.keys(data.query.pages)[0];
+      const pageData = data.query.pages[pageId];
+      const title = pageData.title;
+      const extract = pageData.extract;
+      return { title, extract, pageId };
+    });
+}
+
+function extractLimitedContent(text, limit) {
+  const sentences = text.split('.');
+  const limitedSentences = sentences.slice(0, limit);
+  const withoutTags = limitedSentences.map(sentence => sentence.replace(/<[^>]+>/g, '')).join('. ');
+  return withoutTags.trim();
+}
+
+function updateWikiResults(results) {
+  const resultsContainer = document.querySelector('#resultsArea .notification.has-text-black');
+
+  // Clear previous results
+  resultsContainer.innerHTML = '';
+
+  results.forEach(result => {
+    const titleElement = document.createElement('h2');
+    titleElement.textContent = result.title;
+
+    const extractElement = document.createElement('p');
+    extractElement.textContent = result.limitedExtract;
+
+    const linkElement = document.createElement('a');
+    linkElement.href = `https://en.wikipedia.org/?curid=${result.pageId}`;
+    linkElement.textContent = 'Read More';
+
+    resultsContainer.appendChild(titleElement);
+    resultsContainer.appendChild(extractElement);
+    resultsContainer.appendChild(linkElement);
+  });
+}
