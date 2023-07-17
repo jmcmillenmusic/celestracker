@@ -13,29 +13,36 @@ document.getElementById('searchButton').addEventListener('click', () => {
   // NASA API URL, which takes the name of the star/planet/constellation from the user
   var nasaApiUrl = 'https://images-api.nasa.gov/search?q=' + starInput + '&media_type=image';
   
-  // Make a request to the NASA API
-  fetch(nasaApiUrl)
-    .then(response => {
-      if (!response.ok) {
-        throw new Error('Request to NASA API failed');
-      }
-      return response.json();
-    })
-    .then(data => {
-      // Check if there are any images available in the response
-      console.log(data);
-      if (data.collection.items.length > 0) {
-        var imageUrl = data.collection.items[0].links[0].href;
+// Make a request to the NASA API
+fetch(nasaApiUrl)
+  .then(response => {
+    if (!response.ok) {
+      throw new Error('Request to NASA API failed');
+    }
+    return response.json();
+  })
+  .then(data => {
+    // Check if there are any images available in the response
+    console.log(data);
+    if (data.collection.items.length > 0) {
+      // Filter the images to select a larger image (e.g., image with "large" in the description)
+      const filteredImages = data.collection.items.filter(item => item.data[0].description.includes('2003'));
+      if (filteredImages.length > 0) {
+        var imageUrl = filteredImages[0].links[0].href;
         starPhoto.setAttribute('src', imageUrl);
       } else {
-        updateResults(''); // No image found
+        // If no larger image found, fallback to the first image
+        var imageUrl = data.collection.items[0].links[0].href;
+        starPhoto.setAttribute('src', imageUrl);
       }
-    })
-    .catch(error => {
-      console.error(error);
-      // Display an error message to the user or perform other actions
-    });
-  
+    } else {
+      updateResults(''); // No image found
+    }
+  })
+  .catch(error => {
+    console.error(error);
+    // Display an error message to the user or perform other actions
+  });
 
   // Make a request to the weather API
   var weatherApiUrl = 'http://api.weatherapi.com/v1/current.json?key=6627c4ea662f482e8d542843231607&q=' + cityInput + '&aqi=no';
@@ -165,3 +172,4 @@ function updateWikiResults(results) {
     resultsContainer.appendChild(linkElement);
   });
 }
+
