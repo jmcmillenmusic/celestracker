@@ -7,7 +7,7 @@ const nasaApiUrl = 'https://images-api.nasa.gov/search';
 const apiUrl = 'http://api.weatherapi.com/v1/current.json';
 
 document.getElementById('searchButton').addEventListener('click', () => {
-  const cityInput = document.getElementById('cityInputField').value;
+  const cityInput = document.getElementById('cityInput').value;
   const starInput = document.getElementById('starList').value;
 
   // Make a request to the NASA API
@@ -71,3 +71,4 @@ for (let i = 0; i < celestialBodies.length; i++) {
   var datalistEl = document.querySelector("#celestialBodies");
   datalistEl.appendChild(optionEl);
 }
+
