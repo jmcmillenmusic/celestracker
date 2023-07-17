@@ -68,7 +68,7 @@ function updateResults(weatherData) {
   paragraphElement.textContent = weatherData.description;
 }
 
-var celestialBodies = ['Mercury', 'Venus', 'Mars', 'Jupiter', 'Saturn', 'Uranus', 'Neptune', 'Pluto'];
+var celestialBodies = ['Mercury', 'Venus', 'Mars', 'Jupiter', 'Saturn', 'Uranus', 'Neptune', 'Pluto', "Andromeda", "Antlia", "Apus", "Aquarius", "Aquila", "Auriga", "Boötes", "Cancer", "Canis Major", "Capricornus", "Cassiopeia", "Cygnus", "Gemini", "Leo", "Libra", "Lyra", "Orion", "Pegasus", "Perseus", "Pisces", "Sagittarius", "Scorpius", "Taurus", "Ursa Major", "Virgo"];
 
 for (let i = 0; i < celestialBodies.length; i++) {
   var optionEl = document.createElement("option");
