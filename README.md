@@ -11,8 +11,17 @@ The Star/Constellation tracker can be accessed through here: {insert webpage lin
 ## Credits
 All websites, documentation, and APIs utilized in our star/constellation tracker will be listed here: 
 Bulma css framework: https://bulma.io/documentation/overview/
-Open-Meteo: https://open-meteo.com/en/docs#latitude=30.0006&longitude=-95.1527&hourly=temperature_2m,cloudcover_low
 NASA API: https://api.nasa.gov/
+Weather API: https://www.weatherapi.com/my/
+Wikipedia API: https://www.mediawiki.org/wiki/API:Main_page
+Astronomy API: https://astronomyapi.com/
+These individuals each contributed to the webpage's overall functionality in regards to all various files being able to coincide with each other as various commits made to the code/files: 
+Jeff McMillen: https://github.com/jmcmillenmusic
+Caleb Covin: https://github.com/CCovin1
+Daniel Lee: https://github.com/drog41813
+Skylar Hammond: https://github.com/SkylarHammond55
+Alex Green: https://github.com/AlexGreen0517
+
 
 ## License
 MIT License
