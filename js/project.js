@@ -87,42 +87,41 @@ fetch(weatherApiUrl)
     console.log(userStats);
 
     // Check if the weather condition is "cloudy"
-    if (currentWeather.condition.text.toLowerCase().includes('overcast')) {
+    if (currentWeather.condition.text.toLowerCase().includes('overcast'),('light rain') , ('heavy rain') , ('snow') , ("rain") , ('fog') , ('thunderstorms')) {
       cloudyModal.classList.add('is-active');
       throw new Error('It is currently cloudy. Please try again later.');
     }
 
     // Continue with other actions if needed
+    // Makes a request to the Astronomy API using the details inserted below and the credentials above
+    var astronomyApi = "https://api.astronomyapi.com/api/v2/bodies/positions?longitude=" + userStats.longitude + "&latitude=" + userStats.latitude + "&elevation=1&from_date=" + userStats.from_date + "&to_date=" + userStats.to_date + "&time=" + userStats.time;
+    console.log(astronomyApi);
+    
+    // Calls the Astronomy API while the latitude and longitude are set from the Weather API based on user-submitted city
+    return fetch(astronomyApi, {
+      method: "GET",
+      headers: {
+        "Authorization": "Basic " + authString
+      }
+      })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error("Request failed");
+        }
+        return response.json();
+      })
+      .then(data => {
+        console.log(data);
+      })
+      .catch(error => {
+        console.error(error);
+      });
+    });
   })
   .catch(error => {
     console.error(error);
     // Display an error message to the user or perform other actions
   });
-
-// Makes a request to the Astronomy API using the details inserted below and the credentials above
-console.log(userStats);
-// var astronomyApi = "https://api.astronomyapi.com/api/v2/bodies/positions?longitude=" + userStats.longitude + "&latitude=" + userStats.latitude + "&elevation=1&from_date=" + userStats.from_date + "&to_date=" + userStats.to_date + "&time=" + userStats.time;
-// console.log(astronomyApi);
-
-fetch(astronomyApi, {
-  method: "GET",
-  headers: {
-    "Authorization": "Basic " + authString
-  }
-  })
-  .then(response => {
-    if (!response.ok) {
-      throw new Error("Request failed");
-    }
-    return response.json();
-  })
-  .then(data => {
-    console.log(data);
-  })
-  .catch(error => {
-    console.error(error);
-  });
-});
 
 function updateResults(weatherData) {
   const imageElement = document.querySelector('#resultImage');
