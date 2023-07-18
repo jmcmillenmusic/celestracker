@@ -98,7 +98,6 @@ fetch(weatherApiUrl)
       weatherText.includes('thunderstorms')
     ) {
       cloudyModal.classList.add('is-active');
-      throw new Error('It is currently cloudy. Please try again later.');
     }
     
     // Continue with other actions if needed
@@ -126,10 +125,6 @@ fetch(weatherApiUrl)
         console.error(error);
       });
     });
-  })
-  .catch(error => {
-    console.error(error);
-    // Display an error message to the user or perform other actions
   });
 
 function updateResults(weatherData) {
