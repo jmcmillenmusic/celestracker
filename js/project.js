@@ -69,7 +69,7 @@ fetch(nasaApiUrl)
   });
 
 // Make a request to the Weather API
-var weatherApiUrl = 'http://api.weatherapi.com/v1/current.json?key=6627c4ea662f482e8d542843231607&q=' + cityInput + '&aqi=no';
+var weatherApiUrl = 'https://api.weatherapi.com/v1/current.json?key=6627c4ea662f482e8d542843231607&q=' + cityInput + '&aqi=no';
 
 fetch(weatherApiUrl)
   .then(response => {
