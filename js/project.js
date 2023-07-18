@@ -26,18 +26,19 @@ var userStats = {
 // Initial variable to interact with modal to be used later
 var cloudyModal = document.getElementById("too-cloudy");
 
-// Heads-up: I (Jeff) moved the API links into the addEventListener section.
-
 // This button will grab the user's inputs for location and what star/planet/constellation they're searching for.
 document.getElementById('searchButton').addEventListener('click', () => {
   var cityInput = document.getElementById('cityInput').value;
   var starInput = document.getElementById('starList').value;
   var starPhoto = document.getElementById('starPhoto');
+  var planetAltitude = document.getElementById('planetAltitude');
+  var planetAzimuth = document.getElementById('planetAzimuth');
+  var helpTextEl = document.getElementById('helpText');
 
   // NASA API URL, which takes the name of the star/planet/constellation from the user
   var nasaApiUrl = 'https://images-api.nasa.gov/search?q=' + starInput + '&media_type=image';
   
-// Make a request to the NASA API
+// Make a request to the NASA Images and Videos API
 fetch(nasaApiUrl)
   .then(response => {
     if (!response.ok) {
@@ -47,7 +48,6 @@ fetch(nasaApiUrl)
   })
   .then(data => {
     // Check if there are any images available in the response
-    console.log(data);
     if (data.collection.items.length > 0) {
       // Filter the images to select a larger image (e.g., image with "large" in the description)
       const filteredImages = data.collection.items.filter(item => item.data[0].description.includes('2003'));
@@ -68,7 +68,7 @@ fetch(nasaApiUrl)
     // Display an error message to the user or perform other actions
   });
 
-// Make a request to the weather API
+// Make a request to the Weather API
 var weatherApiUrl = 'http://api.weatherapi.com/v1/current.json?key=6627c4ea662f482e8d542843231607&q=' + cityInput + '&aqi=no';
 
 fetch(weatherApiUrl)
@@ -79,12 +79,9 @@ fetch(weatherApiUrl)
     return response.json();
   })
   .then(data => {
-    console.log(data);
     const currentWeather = data.current;
-    console.log(currentWeather);
     userStats.longitude = data.location.lon.toString();
     userStats.latitude = data.location.lat.toString();
-    console.log(userStats);
 
     // Check if the weather condition is "cloudy"
     const weatherText = currentWeather.condition.text.toLowerCase();
@@ -101,9 +98,9 @@ fetch(weatherApiUrl)
     }
     
     // Continue with other actions if needed
+
     // Makes a request to the Astronomy API using the details inserted below and the credentials above
     var astronomyApi = "https://api.astronomyapi.com/api/v2/bodies/positions?longitude=" + userStats.longitude + "&latitude=" + userStats.latitude + "&elevation=1&from_date=" + userStats.from_date + "&to_date=" + userStats.to_date + "&time=" + userStats.time;
-    console.log(astronomyApi);
     
     // Calls the Astronomy API while the latitude and longitude are set from the Weather API based on user-submitted city
     return fetch(astronomyApi, {
@@ -119,7 +116,15 @@ fetch(weatherApiUrl)
         return response.json();
       })
       .then(data => {
-        console.log(data);
+        for (i = 0; i < data.data.table.rows.length; i++) {
+          if (starInput.value == data.data.table.rows[i].entry.id || data.data.table.rows[i].entry.name) {
+            const altitude = data.data.table.rows[i].cells[0].position.horizonal.altitude.string;
+            const azimuth = data.data.table.rows[i].cells[0].position.horizonal.azimuth.string;
+            planetAltitude.textContent = "Altitude: " + altitude;
+            planetAzimuth.textContent = "Azimuth: " + azimuth;
+          }
+        }
+        helpTextEl.removeAttribute('class', 'is-hidden');
       })
       .catch(error => {
         console.error(error);
@@ -136,8 +141,10 @@ function updateResults(weatherData) {
   paragraphElement.textContent = weatherData.description;
 }
 
+// This is the list of all celestial bodies that appear in the autocomplete field.
 var celestialBodies = ['Mercury', 'Venus', 'Mars', 'Jupiter', 'Saturn', 'Uranus', 'Neptune', 'Pluto', "Andromeda", "Antlia", "Apus", "Aquarius", "Aquila", "Auriga", "Boötes", "Cancer", "Canis Major", "Capricornus", "Cassiopeia", "Cygnus", "Gemini", "Leo", "Libra", "Lyra", "Orion", "Pegasus", "Perseus", "Pisces", "Sagittarius", "Scorpius", "Taurus", "Ursa Major", "Virgo"];
 
+// This creates the autocomplete list so that the user can more correctly spell the name of the celestial body.
 document.getElementById('starList').addEventListener('input', function() {
   var userInput = this.value;
   var datalistEl = document.querySelector("#celestialBodies");
@@ -152,6 +159,7 @@ document.getElementById('starList').addEventListener('input', function() {
   }
 });
 
+// This uses the Wikipedia API to present facts on the user-submitted celestial body.
 document.getElementById('searchButton').addEventListener('click', searchWikipedia);
 
 function searchWikipedia() {
@@ -186,6 +194,7 @@ function searchWikipedia() {
     });
 }
 
+// This grabs the initial content from the Wikipedia article for the user-submitted celestial body.
 function fetchPageContent(pageTitle) {
   const pageUrl = `https://en.wikipedia.org/w/api.php?action=query&origin=*&format=json&prop=extracts&exintro=true&titles=${encodeURIComponent(pageTitle)}`;
   return fetch(pageUrl)
@@ -204,6 +213,7 @@ function fetchPageContent(pageTitle) {
     });
 }
 
+// This limits the amount of text in order to not overwhelm the user with information.
 function extractLimitedContent(text, limit) {
   const sentences = text.split('.');
   const limitedSentences = sentences.slice(0, limit);
@@ -211,6 +221,7 @@ function extractLimitedContent(text, limit) {
   return withoutTags.trim();
 }
 
+// This updates the Wikipedia materials to the user each time they submit the requested information.
 function updateWikiResults(results) {
   const resultsContainer = document.querySelector('#resultsArea .notification.has-text-black');
 
