@@ -7,11 +7,13 @@ const applicationId = '7763bed4-51a4-4e07-aee2-c47662434094';
 const applicationSecret = 'c3dd81bf0406ecd6225c16fa820b4e99876b91cb405354f50f1f0b108ef413e27c8c01b450c7e0d4b7fb9388b884cb4dbcb2760724531c732736b05728ed56dcd7928452733bb6b035baea3152b02af3d1555d2df69d59423a8b94b474e1007a94a55d8912b70f0ed65f2c926a8a8fd0';
 const authString = btoa(`${applicationId}:${applicationSecret}`);
 
+// Initial variables for storing current day and time
 var today = dayjs().format('YYYY-MM-DD');
 var hour = dayjs().format('HH');
 var minute = dayjs().format('mm');
 var second = dayjs().format('ss');
 
+// Initial object that stores user information for Astronomy API
 var userStats = {
   longitude: "",
   latitude: "",
@@ -20,6 +22,9 @@ var userStats = {
   to_date: today,
   time: `${hour}%3A${minute}%3A${second}`
 };
+
+// Initial variable to interact with modal to be used later
+var cloudyModal = document.getElementById("too-cloudy");
 
 // Heads-up: I (Jeff) moved the API links into the addEventListener section.
 
@@ -83,6 +88,7 @@ fetch(weatherApiUrl)
 
     // Check if the weather condition is "cloudy"
     if (currentWeather.condition.text.toLowerCase().includes('overcast')) {
+      cloudyModal.classList.add('is-active');
       throw new Error('It is currently cloudy. Please try again later.');
     }
 
@@ -98,24 +104,24 @@ console.log(userStats);
 // var astronomyApi = "https://api.astronomyapi.com/api/v2/bodies/positions?longitude=" + userStats.longitude + "&latitude=" + userStats.latitude + "&elevation=1&from_date=" + userStats.from_date + "&to_date=" + userStats.to_date + "&time=" + userStats.time;
 // console.log(astronomyApi);
 
-// fetch(astronomyApi, {
-//   method: "GET",
-//   headers: {
-//     "Authorization": "Basic " + authString
-//   }
-// })
-//   .then(response => {
-//     if (!response.ok) {
-//       throw new Error("Request failed");
-//     }
-//     return response.json();
-//   })
-//   .then(data => {
-//     console.log(data);
-//   })
-//   .catch(error => {
-//     console.error(error);
-//   });
+fetch(astronomyApi, {
+  method: "GET",
+  headers: {
+    "Authorization": "Basic " + authString
+  }
+  })
+  .then(response => {
+    if (!response.ok) {
+      throw new Error("Request failed");
+    }
+    return response.json();
+  })
+  .then(data => {
+    console.log(data);
+  })
+  .catch(error => {
+    console.error(error);
+  });
 });
 
 function updateResults(weatherData) {
@@ -225,3 +231,29 @@ function updateWikiResults(results) {
   });
 }
 
+// This sets up the functionality to allow the user to interact with modals.
+document.addEventListener('DOMContentLoaded', () => {
+  // Functions to open and close a modal
+  function openModal($el) {
+    $el.classList.add('is-active');
+  }
+
+  function closeModal($el) {
+    $el.classList.remove('is-active');
+  }
+
+  function closeAllModals() {
+    (document.querySelectorAll('.modal') || []).forEach(($modal) => {
+      closeModal($modal);
+    });
+  }
+
+  // Add a click event on various child elements to close the parent modal
+  (document.querySelectorAll('.modal-background, .modal-close, .modal-card-head .delete, .modal-card-foot .button') || []).forEach(($close) => {
+    const $target = $close.closest('.modal');
+
+    $close.addEventListener('click', () => {
+      closeModal($target);
+    });
+  });
+});

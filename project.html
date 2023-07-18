@@ -31,7 +31,7 @@
             <div class="control tile is-child is-4 is-info">
                 <input id="cityInput" class="input is-large is-link" type="text" placeholder="Austin">
                 <!--TODO make this work or move it-->
-                <p id="errorMessage" class="help is-danger is-hidden">It's too cloudy to see celestial bodies in this city.</p>
+                
             </div>
             <div class="tile is-child is-1.5">
 
@@ -85,6 +85,16 @@
             </div>
         </section>
     </main>
+    <div id="too-cloudy" class="modal">
+        <div class="modal-background"></div>
+        <div class="modal-content">
+          <div class="box">
+            <h3 id="errorMessage">It's too cloudy to see celestial bodies in this city.</h3>
+            <!-- Your content -->
+          </div>
+        </div>
+        <button class="modal-close is-large" aria-label="close"></button>
+      </div>
     <script
       src="https://cdn.jsdelivr.net/npm/dayjs@1.11.3/dayjs.min.js"
       integrity="sha256-iu/zLUB+QgISXBLCW/mcDi/rnf4m4uEDO0wauy76x7U="
