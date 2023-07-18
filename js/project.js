@@ -33,6 +33,9 @@ document.getElementById('searchButton').addEventListener('click', () => {
   var cityInput = document.getElementById('cityInput').value;
   var starInput = document.getElementById('starList').value;
   var starPhoto = document.getElementById('starPhoto');
+  var planetAltitude = document.getElementById('planetAltitude');
+  var planetAzimuth = document.getElementById('planetAzimuth');
+  var helpTextEl = document.getElementById('helpText');
 
   // NASA API URL, which takes the name of the star/planet/constellation from the user
   var nasaApiUrl = 'https://images-api.nasa.gov/search?q=' + starInput + '&media_type=image';
@@ -120,6 +123,25 @@ fetch(weatherApiUrl)
       })
       .then(data => {
         console.log(data);
+        // const rows = data.table.rows;
+        // for (i = 0; i < rows.length; i++) {
+        //   const entry = rows[i].entry;
+        //   const cells = rows[i].cells;
+        //   const id = entry.id;
+        //   const name = entry.name;
+        //   const cell = cells[0];
+        //   const altitude = cell.postion.horizonal.altitude;
+        //   const azimuth = cell.position.horizonal.azimuth;
+        // }
+        for (i = 0; i < data.data.table.rows.length; i++) {
+          if (starInput.value == data.data.table.rows[i].entry.id || data.data.table.rows[i].entry.name) {
+            const altitude = data.data.table.rows[i].cells[0].position.horizonal.altitude.string;
+            const azimuth = data.data.table.rows[i].cells[0].position.horizonal.azimuth.string;
+            planetAltitude.textContent = "Altitude: " + altitude;
+            planetAzimuth.textContent = "Azimuth: " + azimuth;
+          }
+        }
+        helpTextEl.removeAttribute('class', 'is-hidden');
       })
       .catch(error => {
         console.error(error);
