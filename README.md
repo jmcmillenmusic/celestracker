@@ -5,8 +5,10 @@ The Star/Planet/Constellation Tracker will essentially allow the user to submit 
  
 
 ## Usage
-The Star/Constellation tracker can be accessed through here: {insert webpage link}
-{insert webpage image}
+The Star/Constellation tracker can be accessed through here: 
+https://jmcmillenmusic.github.io/project-1/
+
+![screenshot](screenshot.png)
 
 ## Credits
 All websites, documentation, and APIs utilized in our star/constellation tracker will be listed here: 
