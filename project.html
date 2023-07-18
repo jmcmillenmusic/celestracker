@@ -11,6 +11,9 @@
 <body>
     <header class="hero is-link block">
         <div class="hero-body">
+            <a href="https://en.wikipedia.org/wiki/Saturn" target="_blank">
+                <img src="saturn-rings-1024x538.webp" alt="saturn" class="logo-image">
+            </a>
             <h1 class="title is-1 has-text-centered">CelesTracker</h1>
             <p class="subtitle has-text-centered">Web App for Finding Stars, Planets, and Constellations</p>
         </div>
@@ -26,7 +29,9 @@
 
             </div>
             <div class="control tile is-child is-4 is-info">
-                <input id="cityInput" class="input is-large is-link" type="text" placeholder="Austin, TX">
+                <input id="cityInput" class="input is-large is-link" type="text" placeholder="Austin">
+                <!--TODO make this work or move it-->
+                
             </div>
             <div class="tile is-child is-1.5">
 
@@ -74,10 +79,27 @@
                 </p>
             </div>
             <div class="tile is-child is-1.5">
-
+                <a href="https://en.wikipedia.org/wiki/Pluto" target="_blank">
+                    <img src="Pluto_.jpg" alt="Pluto" class="logo-image1">
+                </a>
             </div>
         </section>
     </main>
+    <div id="too-cloudy" class="modal">
+        <div class="modal-background"></div>
+        <div class="modal-content">
+          <div class="box">
+            <h3 id="errorMessage">It's too cloudy to see celestial bodies in this city.</h3>
+            <!-- Your content -->
+          </div>
+        </div>
+        <button class="modal-close is-large" aria-label="close"></button>
+      </div>
+    <script
+      src="https://cdn.jsdelivr.net/npm/dayjs@1.11.3/dayjs.min.js"
+      integrity="sha256-iu/zLUB+QgISXBLCW/mcDi/rnf4m4uEDO0wauy76x7U="
+      crossorigin="anonymous"
+    ></script>
     <script src="./js/project.js"></script>
 </body>
 </html>
