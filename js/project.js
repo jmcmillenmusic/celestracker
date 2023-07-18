@@ -87,11 +87,20 @@ fetch(weatherApiUrl)
     console.log(userStats);
 
     // Check if the weather condition is "cloudy"
-    if (currentWeather.condition.text.toLowerCase().includes('overcast'),('light rain') , ('heavy rain') , ('snow') , ("rain") , ('fog') , ('thunderstorms')) {
+    const weatherText = currentWeather.condition.text.toLowerCase();
+    if (
+      weatherText.includes('overcast') ||
+      weatherText.includes('light rain') ||
+      weatherText.includes('heavy rain') ||
+      weatherText.includes('snow') ||
+      weatherText.includes('rain') ||
+      weatherText.includes('fog') ||
+      weatherText.includes('thunderstorms')
+    ) {
       cloudyModal.classList.add('is-active');
       throw new Error('It is currently cloudy. Please try again later.');
     }
-
+    
     // Continue with other actions if needed
     // Makes a request to the Astronomy API using the details inserted below and the credentials above
     var astronomyApi = "https://api.astronomyapi.com/api/v2/bodies/positions?longitude=" + userStats.longitude + "&latitude=" + userStats.latitude + "&elevation=1&from_date=" + userStats.from_date + "&to_date=" + userStats.to_date + "&time=" + userStats.time;
