@@ -7,6 +7,20 @@ const applicationId = '7763bed4-51a4-4e07-aee2-c47662434094';
 const applicationSecret = 'c3dd81bf0406ecd6225c16fa820b4e99876b91cb405354f50f1f0b108ef413e27c8c01b450c7e0d4b7fb9388b884cb4dbcb2760724531c732736b05728ed56dcd7928452733bb6b035baea3152b02af3d1555d2df69d59423a8b94b474e1007a94a55d8912b70f0ed65f2c926a8a8fd0';
 const authString = btoa(`${applicationId}:${applicationSecret}`);
 
+var today = dayjs().format('YYYY-MM-DD');
+var hour = dayjs().format('HH');
+var minute = dayjs().format('mm');
+var second = dayjs().format('ss');
+
+var userStats = {
+  longitude: "",
+  latitude: "",
+  elevation: "1",
+  from_date: today,
+  to_date: today,
+  time: `${hour}%3A${minute}%3A${second}`
+};
+
 // Heads-up: I (Jeff) moved the API links into the addEventListener section.
 
 // This button will grab the user's inputs for location and what star/planet/constellation they're searching for.
@@ -51,7 +65,6 @@ fetch(nasaApiUrl)
 
 // Make a request to the weather API
 var weatherApiUrl = 'http://api.weatherapi.com/v1/current.json?key=6627c4ea662f482e8d542843231607&q=' + cityInput + '&aqi=no';
-console.log(weatherApiUrl);
 
 fetch(weatherApiUrl)
   .then(response => {
@@ -64,6 +77,9 @@ fetch(weatherApiUrl)
     console.log(data);
     const currentWeather = data.current;
     console.log(currentWeather);
+    userStats.longitude = data.location.lon.toString();
+    userStats.latitude = data.location.lat.toString();
+    console.log(userStats);
 
     // Check if the weather condition is "cloudy"
     if (currentWeather.condition.text.toLowerCase().includes('overcast')) {
@@ -78,26 +94,28 @@ fetch(weatherApiUrl)
   });
 
 // Makes a request to the Astronomy API using the details inserted below and the credentials above
-const astronomyApi = "https://api.astronomyapi.com/api/v2/bodies/positions?longitude=-84.39733&latitude=33.775867&elevation=1&from_date=2023-07-17&to_date=2023-07-17&time=13%3A06%3A36";
+console.log(userStats);
+// var astronomyApi = "https://api.astronomyapi.com/api/v2/bodies/positions?longitude=" + userStats.longitude + "&latitude=" + userStats.latitude + "&elevation=1&from_date=" + userStats.from_date + "&to_date=" + userStats.to_date + "&time=" + userStats.time;
+// console.log(astronomyApi);
 
-fetch(astronomyApi, {
-  method: "GET",
-  headers: {
-    "Authorization": "Basic " + authString
-  }
-})
-  .then(response => {
-    if (!response.ok) {
-      throw new Error("Request failed");
-    }
-    return response.json();
-  })
-  .then(data => {
-    console.log(data);
-  })
-  .catch(error => {
-    console.error(error);
-  });
+// fetch(astronomyApi, {
+//   method: "GET",
+//   headers: {
+//     "Authorization": "Basic " + authString
+//   }
+// })
+//   .then(response => {
+//     if (!response.ok) {
+//       throw new Error("Request failed");
+//     }
+//     return response.json();
+//   })
+//   .then(data => {
+//     console.log(data);
+//   })
+//   .catch(error => {
+//     console.error(error);
+//   });
 });
 
 function updateResults(weatherData) {
