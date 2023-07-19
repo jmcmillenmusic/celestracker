@@ -36,7 +36,7 @@ document.getElementById('searchButton').addEventListener('click', () => {
   var helpTextEl = document.getElementById('helpText');
 
   // NASA API URL, which takes the name of the star/planet/constellation from the user
-  var nasaApiUrl = 'https://images-api.nasa.gov/search?q=' + starInput + '&media_type=image';
+  var nasaApiUrl = "https://images-api.nasa.gov/search?q=" + starInput + "&media_type=image";
   
 // Make a request to the NASA Images and Videos API
 fetch(nasaApiUrl)
@@ -69,7 +69,7 @@ fetch(nasaApiUrl)
   });
 
 // Make a request to the Weather API
-var weatherApiUrl = 'http://api.weatherapi.com/v1/current.json?key=6627c4ea662f482e8d542843231607&q=' + cityInput + '&aqi=no';
+var weatherApiUrl = 'https://api.weatherapi.com/v1/current.json?key=6627c4ea662f482e8d542843231607&q=' + cityInput + '&aqi=no';
 
 fetch(weatherApiUrl)
   .then(response => {
