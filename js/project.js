@@ -36,7 +36,7 @@ document.getElementById('searchButton').addEventListener('click', () => {
   var helpTextEl = document.getElementById('helpText');
 
   // NASA API URL, which takes the name of the star/planet/constellation from the user
-  var nasaApiUrl = 'https://images-api.nasa.gov/search?q=' + starInput + '&media_type=image';
+  var nasaApiUrl = "https://images-api.nasa.gov/search?q=" + starInput + "&media_type=image";
   
 // Make a request to the NASA Images and Videos API
 fetch(nasaApiUrl)

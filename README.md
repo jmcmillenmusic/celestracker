@@ -6,7 +6,7 @@ The Star/Planet/Constellation Tracker will essentially allow the user to submit 
 
 ## Usage
 The Star/Constellation tracker can be accessed through here: 
-https://jmcmillenmusic.github.io/project-1/
+https://jmcmillenmusic.github.io/celestracker/
 
 ![screenshot](screenshot.png)
 
